@@ -36,12 +36,16 @@ def inspire():
 # Gets a random quote from the database
 @app.route("/getinspired",methods=["GET","POST"])
 def getinspired():
-    data = Inspiration.query.all()
+    inspiration_list = Inspiration.query.all()
+    return render_template("getinspired.html", inspiration_list=inspiration_list) 
 
-    #inspirations = Inspiration.query.filter_by(inspiration="inspiration").order_by(id="inspiration.id").all()
-    
-    return render_template("getinspired.html") 
+# Delete an entry in the database
+@app.route("/getinspired/<int:inspiration_id>")
+def delete(inspiration_id):
+    delete_inspiration = Inspiration.query.filter_by(id=inspiration_id).first()
+    db.session.delete(delete_inspiration)
+    db.session.commit()
+    return render_template("/index.html")
 
 if __name__ == "__main__":
-    
     app.run(debug=True)

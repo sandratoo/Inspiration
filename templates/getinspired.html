@@ -10,7 +10,11 @@
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmelySjo-qxxL2PTFVBmO-AvtGRGbwVYxijw&usqp=CAU">
         <br>
         <form action="getinspired" method="post">
-    
         </form>
+        <div>
+            {% for inspiration in inspiration_list %}
+            <p>"{{ inspiration.data }}"({{ inspiration.id }}) </p>
+            {% endfor %}
+        </div>
     </body>
 </html>
