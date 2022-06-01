@@ -11,32 +11,37 @@ db = SQLAlchemy(app)
 
 class Inspiration(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    inspiration = db.Column(db.String(150))
+    data = db.Column(db.String(150))
 
     def __repr__(self):
-        return f"{self.id} - {self.inspiration}"
+        return f"{self.id} - {self.data}"
 
 # Lnding page
 @app.route("/")
 def index():
-    flash("Welcome! Are you here to inspire or get inspired?")
     return render_template("index.html")
 
 # Gets an inspiration from a form and stores it in the database
 @app.route("/inspire",methods=["POST","GET"])
 def inspire():
-    inspiration = request.form["inspiration"]
-    if inspiration:
-        db.session.add(inspiration)
-        db.session.commit()
-        return redirect(url_for("/"))
+    if request.method== "POST":
+        data = request.form.get("data")
+        if data:
+            new_data = Inspiration(data=data)
+            db.session.add(new_data)
+            db.session.commit()
+            return render_template("index.html")
     return render_template("inspire.html")
 
 # Gets a random quote from the database
 @app.route("/getinspired",methods=["GET","POST"])
 def getinspired():
-    flash("Hope you feel inspired!")
-    return render_template("getinspired.html")
+    data = Inspiration.query.all()
+
+    #inspirations = Inspiration.query.filter_by(inspiration="inspiration").order_by(id="inspiration.id").all()
+    
+    return render_template("getinspired.html") 
 
 if __name__ == "__main__":
+    
     app.run(debug=True)

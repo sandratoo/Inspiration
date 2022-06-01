@@ -3,20 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <title>Inspire</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css') }}">
     </head>
     <body>
         <h1>Inspire</h1>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrcJhR5YDqL4-j5gjO7ycu4CF0n8StWTp8LQ&usqp=CAU">
         <br>
-        {% for message in get_flashed_messages() %}
+        <form action="/inspire" method="post">
+            {% for message in get_flashed_messages() %}
             <p>{{message}}</p>
             {% endfor %}
-        <br>
-        <form action="/inspire" method="post">
-            <textarea type="text" id="inspiration" name="inspiration" placeholder="Leave your inspiration message here" required></textarea>
+            <textarea id="data" name="data" placeholder="Leave your inspiration message here" required></textarea>
             <br>
-            <input type="submit" value="INSPIRE" id="inspire">
+            <input type="submit" value="INSPIRE" id="inspire" name="inspire">
         </form>
     </body>
 </html>
